@@ -3,7 +3,7 @@ var sideBarCtrl = function($scope) {
 
     $scope.toggleSidaBar = function() {
         $scope.sidaBarVisible = (!$scope.sidaBarVisible);
-    }
+    };
 };
 
 var appCtrl = function($scope) {
@@ -15,7 +15,16 @@ var appCtrl = function($scope) {
         {
             'name': 'teste2'
         }
-    ]
+    ];
+    $scope.breedListFavorites = [];
+
+    var getBreeds = function() {
+
+    };
+
+    var getBreedImages = function() {
+
+    };
 }
 
 myApp.controller('sideBarCtrl', sideBarCtrl)
