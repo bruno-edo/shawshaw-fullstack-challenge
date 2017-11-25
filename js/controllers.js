@@ -6,4 +6,17 @@ var sideBarCtrl = function($scope) {
     }
 };
 
+var appCtrl = function($scope) {
+    $scope.breedSearchKeyword = "";
+    $scope.breedList = [
+        {
+            'name': 'teste1'
+        },
+        {
+            'name': 'teste2'
+        }
+    ]
+}
+
 myApp.controller('sideBarCtrl', sideBarCtrl)
+     .controller('appCtrl', appCtrl)

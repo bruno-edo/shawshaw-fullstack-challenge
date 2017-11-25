@@ -5,7 +5,7 @@
         <i class="fa fa-search" aria-hidden="true"></i>        
     </div>
     <div class="col-md-5">
-        <input type="text" class="form-control" id="dog-breeds-search" placeholder="Search for breeds...">
+        <input type="text" class="form-control" id="dog-breeds-search" placeholder="Search for breeds..." ng-model="breedSearchKeyword">
     </div>
 </div>
 <div class="form-group row">
@@ -15,13 +15,9 @@
                 <th class="w-75">Breed</th>
                 <th></th>
             </tr>
-            <tr>
-                <td>Teste</td>
-                <td>Teste</td>
-            </tr>
-            <tr>
-                <td>Teste</td>
-                <td>Teste</td>
+            <tr ng-repeat="breed in breedList | filter: breedSearchKeyword">
+                <td>{{breed.name}}</td>
+                <td>Estrela</td>
             </tr>
         </table>
     </div> 
