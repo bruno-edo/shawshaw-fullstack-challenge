@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="Shaw & Partners Full Stack Dev challenge Dogs APP">
+        <meta name="author" content="Bruno Eduardo D Angelo de Oliveira">
+
+        <title>Shaw & Partners - Dogs App</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom styles for this template -->
+        <link href="css/simple-sidebar.css" rel="stylesheet">
+
+    </head>
+
+    <body ng-app="dogs-app">
+
+        <div id="wrapper" class="toggled">
+
+            <!-- Sidebar -->
+            <div id="sidebar-wrapper">
+                <ul class="sidebar-nav">
+                    <li class="sidebar-brand">
+                        <a ui-sref="home">
+                            Dogs APP
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="home">Home</a>
+                    </li>
+                    <li>
+                        <a ui-sref="breed-images">Images</a>
+                    </li>
+                    <li>
+                        <a href="#">Favorites</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /#sidebar-wrapper -->
+
+            <!-- Page Content -->
+            <div id="page-content-wrapper">
+                <div class="container-fluid">
+                        <ui-view></ui-view>
+                </div>
+            </div>
+            <!-- /#page-content-wrapper -->
+
+        </div>
+        <!-- /#wrapper -->
+
+        <!-- AngularJS -->
+        <script src="js/angularjs/angular.js"></script>
+
+        <!-- AngularJS ui-router -->
+        <script src="js/plugins/ui-router/angular-ui-router.min.js"></script>
+
+        <!-- Bootstrap core JavaScript -->
+        <script src="js/jquery/jquery.min.js"></script>
+        <script src="js/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+        <!-- Main app files -->
+        <script src="js/app.js"></script>
+        <script src="js/routing.js"></script>
+
+        <!-- Menu Toggle Script -->
+        <script>
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+        </script>
+
+    </body>
+
+</html>
