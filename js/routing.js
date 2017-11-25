@@ -9,11 +9,17 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
       name: 'breed-images',
       url: '/images',
       templateUrl: 'templates/breed_images.html'
-    } 
+    }
+
+    var favoritesState = {
+      name: 'favorites',
+      url: '/favorites',
+      templateUrl: 'templates/favorites.html'
+    }
     
     $stateProvider.state(homeState);
     $stateProvider.state(imagesState);
-
+    $stateProvider.state(favoritesState);
 
     $urlRouterProvider.otherwise('/');
 });
