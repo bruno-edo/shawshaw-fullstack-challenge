@@ -1,8 +1,8 @@
 var sideBarCtrl = function($scope) {
-    $scope.sidaBarVisible = true;
+    $scope.sideBarVisible = true;
 
     $scope.toggleSidaBar = function() {
-        $scope.sidaBarVisible = (!$scope.sidaBarVisible);
+        $scope.sideBarVisible = !$scope.sideBarVisible;
     };
 };
 
@@ -10,20 +10,27 @@ var appCtrl = function($scope) {
     $scope.breedSearchKeyword = "";
     $scope.breedList = [
         {
-            'name': 'teste1'
+            'name': 'teste1',
+            'favorite': true
         },
         {
-            'name': 'teste2'
+            'name': 'teste2',
+            'favorite': false
         }
     ];
     $scope.breedListFavorites = [];
 
-    var getBreeds = function() {
+    $scope.getBreeds = function() {
 
     };
 
-    var getBreedImages = function() {
+    $scope.getBreedImages = function() {
 
+    };
+
+    $scope.toggleFavorite = function(item) {
+        console.log('toggle');
+        item.favorite = !item.favorite;
     };
 }
 

@@ -17,7 +17,11 @@
             </tr>
             <tr ng-repeat="breed in breedList | filter: breedSearchKeyword">
                 <td>{{breed.name}}</td>
-                <td>Estrela</td>
+                <td class="pull-right">
+                    <button class="btn btn-light" ng-click="toggleFavorite(breed)">
+                        <i class="fa fa-lg" aria-hidden="true" ng-class="breed.favorite ? 'fa-star favorite' : 'fa-star-o '"></i>
+                    </button>
+                </td>
             </tr>
         </table>
     </div> 
