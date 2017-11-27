@@ -47,7 +47,17 @@ class DogBreeds(webapp2.RequestHandler):
         pass
 
 
+class DogImages(webapp2.RequestHandler):
+    def get(self):
+        breed_name = self.request.get('breedName')
+        url = API_BREEDS_DOGS + '/api/{0}/images'
+        url = url.format(breed_name)
+        response = urllib2.urlopen(url)
+        data = json.load(response)
+        self.response.write(json.dumps(data))
+
 app = webapp2.WSGIApplication([
     ('/', MainPage),
-    ('/dogs/breeds', DogBreeds)
+    ('/dogs/breeds', DogBreeds),
+    ('/dogs/breeds/images', DogImages)
 ], debug=True)
