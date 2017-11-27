@@ -97,7 +97,7 @@ var breedCtrl = function($scope, $http, $stateParams, $q) {
         $http.get('dogs/favorites').then(
             function(data, status, headers, config) {
                 var index = data.data.indexOf($scope.selectedBreedName);
-                
+
                 if(index == -1) {
                     $scope.favorite = false;
                 }
@@ -141,7 +141,8 @@ var breedCtrl = function($scope, $http, $stateParams, $q) {
 };
 
 var favoritesCtrl = function($scope, $q) {
-
+    $scope.favoriteBreeds = null;
+    
 };
 
 myApp.controller('sideBarCtrl', sideBarCtrl)
