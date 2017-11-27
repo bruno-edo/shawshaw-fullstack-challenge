@@ -6,7 +6,7 @@
     <div class="col-md-12">
         <h2 class="font-weight-bold align-middle">
             {{selectedBreedName}}
-            <button class="btn btn-light" ng-click="toggleFavorite()">
+            <button class="btn btn-light" ng-click="toggleFavorite()" title="Favorite">
                 <i class="fa fa-lg" aria-hidden="true" ng-class="favorite ? 'fa-star favorite' : 'fa-star-o '"></i>
             </button>
         </h2>
@@ -21,7 +21,7 @@
 </div>
 
 <div class="form-group row" ng-if="!loading">
-    <div class="col-md-4" ng-repeat="photo in selectedBreedImages">
+    <div class="col-md-4 col-xs-12" ng-repeat="photo in selectedBreedImages">
         <img src="{{photo}}" class="img-fluid img-thumbnail mx-auto d-block">
     </div>
 </div>

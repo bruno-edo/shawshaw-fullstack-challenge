@@ -31,7 +31,7 @@
                     <a ui-sref="breed-images({'breedName': breed.name})">{{breed.name}}</a>
                 </td>
                 <td class="pull-right align-middle">
-                    <button class="btn btn-light" ng-click="toggleFavorite(breed)">
+                    <button class="btn btn-light" ng-click="toggleFavorite(breed)" title="Favorite">
                         <i class="fa fa-lg" aria-hidden="true" ng-class="breed.favorite ? 'fa-star favorite' : 'fa-star-o '"></i>
                     </button>
                 </td>

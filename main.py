@@ -63,7 +63,7 @@ class DogBreeds(BaseHandler):
 
         for breed in list_breeds:
             capitalized_name = breed.lower().capitalize()
-            
+
             dict_breed = {
                 'name': capitalized_name,
                 'favorite': self.is_favorite(capitalized_name)
@@ -100,7 +100,6 @@ class DogImages(BaseHandler):
             data = json.load(response)
 
             if num_images <= 0:
-
                 dict_breed = {
                     'name': breed_name,
                     'images': data

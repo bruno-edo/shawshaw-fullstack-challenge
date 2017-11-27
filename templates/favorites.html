@@ -10,18 +10,19 @@
 </div>
 
 <div ng-if="!loading">
-    <div class="form-group row" ng-repeat="breed in favoriteBreeds">
-        <div class="row col-md-12">
+    <div class="row" ng-repeat="breed in favoriteBreeds">
+        <div class="col-md-12">
             <h2 class="font-weight-bold align-middle">
                 {{breed.name}}
                 <!-- Change button to be delete only -->
-                <button class="btn btn-light" ng-click="removeFromFavorites(breed)">
-                    <i class="fa fa-times-circle-o fa-2x" aria-hidden="true"></i>                
+                <button class="btn btn-light" ng-click="removeFromFavorites(breed)" title="Remove from favorites">
+                    <i class="fa fa-times-circle-o fa-2x remove-favorite" aria-hidden="true"></i>                
                 </button>
             </h2>
         </div>
-        <div class="col-md-4" ng-repeat="photo in breed.images">
+        <div class="col-md-4 col-xs-12" ng-repeat="photo in breed.images">
             <img src="{{photo}}" class="img-fluid img-thumbnail mx-auto d-block">
         </div>
+        <hr class="col-md-12" />
     </div>
 </div>

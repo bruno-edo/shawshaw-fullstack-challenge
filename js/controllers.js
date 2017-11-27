@@ -195,7 +195,7 @@ var favoritesCtrl = function($scope, $http, $q) {
                 console.log(error);
             }
         );
-    }
+    };
 
     getFavorites();
     $scope.loading = true;
