@@ -21,11 +21,27 @@ class MainPage(webapp2.RequestHandler):
         self.response.write(template.render())
 
 class DogBreeds(webapp2.RequestHandler):
+    def get_breed_dict_list(self, list_breeds):
+        return_list = []
+
+        for breed in list_breeds:
+            dict_breed = {
+                'name': breed,
+                'favorite': False
+            }
+            return_list.append(dict_breed)
+
+        return return_list
+
+
     def get(self):
         url = API_BREEDS_DOGS + '/api/breeds'
         response = urllib2.urlopen(url)
         data = json.load(response)
-        self.response.write(json.dumps(data))
+
+        list_dict_breeds = self.get_breed_dict_list(data)
+
+        self.response.write(json.dumps(list_dict_breeds))
 
     def post(self):
         pass

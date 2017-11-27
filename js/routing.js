@@ -8,9 +8,9 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
 
     var imagesState = {
       name: 'breed-images',
-      url: '/images',
+      url: '/images/:breedName',
       templateUrl: 'templates/breed_images.html',
-      controller: 'appCtrl'
+      controller: 'breedCtrl'
     }
 
     var favoritesState = {

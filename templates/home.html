@@ -1,4 +1,4 @@
-<div class="form-group row col-md-12">
+<div class="form-group row col-md-12" ng-init="getDogBreeds">
     <h1>Home</h1>
 </div>
 
@@ -20,7 +20,9 @@
                 <th></th>
             </tr>
             <tr ng-repeat="breed in breedList | filter: breedSearchKeyword">
-                <td class="align-middle">{{breed.name}}</td>
+                <td class="align-middle">
+                    <a ui-sref="breed-images({'breedName': breed.name})">{{breed.name}}</a>
+                </td>
                 <td class="pull-right align-middle">
                     <button class="btn btn-light" ng-click="toggleFavorite(breed)">
                         <i class="fa fa-lg" aria-hidden="true" ng-class="breed.favorite ? 'fa-star favorite' : 'fa-star-o '"></i>

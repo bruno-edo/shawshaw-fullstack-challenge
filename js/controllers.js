@@ -6,19 +6,35 @@ var sideBarCtrl = function($scope) {
     };
 };
 
-var appCtrl = function($scope) {
-    $scope.breedSearchKeyword = "";
-    $scope.breedList = [
-        {
-            'name': 'teste1',
-            'favorite': true
-        },
-        {
-            'name': 'teste2',
-            'favorite': false
-        }
-    ];
+var appCtrl = function($scope, $http, $q) {
+    $scope.breedSearchKeyword = '';
+    $scope.breedList = [];
     $scope.breedListFavorites = [];
+
+    var getDogBreeds = function() {
+        var deferred = $q.defer();
+
+        $http.get('dogs/breeds').then(
+            function(data, status, headers, config) {
+            $scope.breedList = data.data;
+            deferred.resolve();
+        },
+        function(error) {
+            console.log(error);
+        });
+
+        return deferred.promise;
+    };
+
+    $scope.toggleFavorite = function(item) {
+        item.favorite = !item.favorite;
+    };
+
+    getDogBreeds();
+};
+
+var breedCtrl = function($scope, $stateParams, $q) {
+    $scope.selectedBreedName = $stateParams.breedName;
     $scope.selectedBreed = {
         'name' : 'Akita',
         'breedPhotoList' : ['https://vetstreet.brightspotcdn.com/dims4/default/84ab16c/2147483647/crop/0x0%2B0%2B0/resize/645x380/quality/90/?url=https%3A%2F%2Fvetstreet-brightspot.s3.amazonaws.com%2Fdb%2F3b3280a40011e087a80050568d634f%2Ffile%2FAkita-2-645mk062111.jpg',
@@ -26,19 +42,14 @@ var appCtrl = function($scope) {
         'http://cdn.akc.org/6_Akita_Red.jpg', 
         'https://vetstreet.brightspotcdn.com/dims4/default/e577587/2147483647/thumbnail/645x380/quality/90/?url=https%3A%2F%2Fvetstreet-brightspot.s3.amazonaws.com%2F62%2F35%2Fcabe34064904a472dfdd450b7fee%2Fakita-AP-1BY6BI-645sm71113.jpg']
     };
+};
 
-    $scope.getBreeds = function() {
-
+var favoritesCtrl = function($scope, $q) {
+    $scope.getDogBreedImages = function(breedName) {
+        
     };
-
-    $scope.getBreedImages = function() {
-
-    };
-
-    $scope.toggleFavorite = function(item) {
-        item.favorite = !item.favorite;
-    };
-}
+};
 
 myApp.controller('sideBarCtrl', sideBarCtrl)
      .controller('appCtrl', appCtrl)
+     .controller('breedCtrl', breedCtrl)
