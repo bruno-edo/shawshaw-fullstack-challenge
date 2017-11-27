@@ -55,15 +55,25 @@ class TestFavorites(unittest.TestCase):
         self.testapp.get('/')
 
     def testFavoritesHandler(self):
-        response = self.testapp.post('/dogs/favorites', {
+        response = self.testapp.post('/dogs/favorites', json.dumps({
             'breedName': 'boxer'
-        })
+        }))
         self.assertEqual(response.status_int, 200)
 
         response = self.testapp.get('/dogs/favorites')
         self.assertEqual(response.status_int, 200)
+
         response_body = json.loads(response.body)
         self.assertEqual(type(response_body), list)
+        self.assertTrue('boxer' in response_body)
 
+        response = self.testapp.delete('/dogs/favorites', json.dumps({
+            'breedName': 'boxer'
+        }))
+        self.assertEqual(response.status_int, 200)
+
+        response = self.testapp.get('/dogs/favorites')
+        self.assertEqual(response.status_int, 200)
+        
 if __name__ == '__main__':
     unittest.main()
