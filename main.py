@@ -62,10 +62,11 @@ class DogBreeds(BaseHandler):
         return_list = []
 
         for breed in list_breeds:
+            capitalized_name = breed.lower().capitalize()
             
             dict_breed = {
-                'name': breed,
-                'favorite': self.is_favorite(breed)
+                'name': capitalized_name,
+                'favorite': self.is_favorite(capitalized_name)
             }
             return_list.append(dict_breed)
 
@@ -83,12 +84,36 @@ class DogBreeds(BaseHandler):
 
 class DogImages(BaseHandler):
     def get(self):
-        breed_name = self.request.get('breedName')
-        url = API_BREEDS_DOGS + '/api/{0}/images'
-        url = url.format(breed_name)
-        response = urllib2.urlopen(url)
-        data = json.load(response)
-        self.response.write(json.dumps(data))
+        breed_names = json.loads(self.request.get('breedNames', default_value=[]))
+        num_images = self.request.get('imageCount', default_value=-1)
+
+        try:
+            num_images = int(num_images)
+        except Exception as err:
+            num_images = -1
+
+        url_base = API_BREEDS_DOGS + '/api/{0}/images'
+        list_breeds = []
+        for breed_name in breed_names:
+            url = url_base.format(breed_name)
+            response = urllib2.urlopen(url)
+            data = json.load(response)
+
+            if num_images <= 0:
+
+                dict_breed = {
+                    'name': breed_name,
+                    'images': data
+                }
+
+            else:
+                dict_breed = {
+                    'name': breed_name,
+                    'images': data[0 : num_images]
+                }
+            list_breeds.append(dict_breed)
+
+        self.response.write(json.dumps(list_breeds))
 
 class DogFavorites(BaseHandler):
     def get(self):

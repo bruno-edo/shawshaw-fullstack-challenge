@@ -18,7 +18,7 @@ var appCtrl = function($scope, $http, $q) {
         },
         function(error) {
             console.log(error);
-            deferredd.reject();
+            deferred.reject();
             $scope.breedList = [];
         });
 
@@ -115,20 +115,22 @@ var breedCtrl = function($scope, $http, $stateParams, $q) {
 
     var getDogBreedImages = function() {
         var deferred = $q.defer();
+        var breedList = [];
+        breedList.push($scope.selectedBreedName);
         
         $http.get('dogs/breeds/images', {
             params: {
-                'breedName': $scope.selectedBreedName
+                'breedNames': JSON.stringify(breedList)
             }
         }).then(
             function(data, status, headers, config) {
                 $scope.loading = false;
-                $scope.selectedBreedImages = data.data;
+                $scope.selectedBreedImages = data.data[0].images;
                 deferred.resolve();
             },
             function(error) {
                 console.log(error);
-                deferredd.reject();
+                deferred.reject();
                 $scope.selectedBreedImages = [];
             }
         );
@@ -142,11 +144,65 @@ var breedCtrl = function($scope, $http, $stateParams, $q) {
     $scope.selectedBreedImages = getDogBreedImages();
 };
 
-var favoritesCtrl = function($scope, $q) {
-    $scope.favoriteBreeds = null;
+var favoritesCtrl = function($scope, $http, $q) {
+    var getDogBreedImages = function(breedList) {
+        var deferred = $q.defer();
+
+        $http.get('dogs/breeds/images', {
+            params: {
+                'breedNames': JSON.stringify(breedList),
+                'imageCount': 5
+            }
+        }).then(
+            function(data, status, headers, config) {
+                $scope.loading = false;
+                $scope.favoriteBreeds = data.data;
+                deferred.resolve();
+            },
+            function(error) {
+                console.log(error);
+                deferred.reject();
+                $scope.favoriteBreeds = [];
+            }
+        );
+
+        return deferred.promise;
+    };
+
+    var getFavorites = function() {
+        $http.get('dogs/favorites').then(
+            function(data, status, headers, config) {
+                $scope.favoriteBreeds = getDogBreedImages(data.data);
+            },
+            function(error) {
+                console.log(error);
+                $scope.favoriteBreeds = [];
+            }
+        );
+    };
+
+    $scope.removeFromFavorites = function(item) {
+        $http.delete('dogs/favorites', {
+            params: {
+                'breedName': item.name
+            }
+        }).then(
+            function(data, status, headers, config) {
+                var index = $scope.favoriteBreeds.indexOf(item);
+                $scope.favoriteBreeds.splice(index, 1);
+            },
+            function(error) {
+                console.log(error);
+            }
+        );
+    }
+
+    getFavorites();
+    $scope.loading = true;
 
 };
 
 myApp.controller('sideBarCtrl', sideBarCtrl)
      .controller('appCtrl', appCtrl)
      .controller('breedCtrl', breedCtrl)
+     .controller('favoritesCtrl', favoritesCtrl)

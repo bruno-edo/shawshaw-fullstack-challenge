@@ -17,7 +17,7 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
       name: 'favorites',
       url: '/favorites',
       templateUrl: 'templates/favorites.html',
-      controller: 'appCtrl'
+      controller: 'favoritesCtrl'
     }
     
     $stateProvider.state(homeState);
