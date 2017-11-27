@@ -11,7 +11,8 @@ var appCtrl = function($scope, $http, $q) {
         var deferred = $q.defer();
 
         $http.get('dogs/breeds').then(
-            function(data, status, headers, config) {
+        function(data, status, headers, config) {
+            $scope.loading = false;
             $scope.breedList = data.data;
             deferred.resolve();
         },
@@ -56,6 +57,7 @@ var appCtrl = function($scope, $http, $q) {
         }
     };
 
+    $scope.loading = true;
     $scope.breedSearchKeyword = '';
     $scope.breedListFavorites = [];
     $scope.breedList = getDogBreeds();
@@ -142,7 +144,7 @@ var breedCtrl = function($scope, $http, $stateParams, $q) {
 
 var favoritesCtrl = function($scope, $q) {
     $scope.favoriteBreeds = null;
-    
+
 };
 
 myApp.controller('sideBarCtrl', sideBarCtrl)
