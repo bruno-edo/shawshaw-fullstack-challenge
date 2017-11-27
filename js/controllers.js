@@ -7,9 +7,6 @@ var sideBarCtrl = function($scope) {
 };
 
 var appCtrl = function($scope, $http, $q) {
-    $scope.breedSearchKeyword = '';
-    $scope.breedListFavorites = [];
-
     var getDogBreeds = function() {
         var deferred = $q.defer();
 
@@ -29,14 +26,90 @@ var appCtrl = function($scope, $http, $q) {
 
     $scope.toggleFavorite = function(item) {
         item.favorite = !item.favorite;
+
+        if(item.favorite) {
+            $http.post('dogs/favorites', {
+                'breedName': item.name
+            }).then(
+                function(data, status, headers, config) {
+
+                },
+                function(error) {
+                    console.log(error);
+                }
+            );
+        }
+
+        else {
+            $http.delete('dogs/favorites', {
+                params: {
+                    'breedName': item.name
+                }
+            }).then(
+                function(data, status, headers, config) {
+
+                },
+                function(error) {
+                    console.log(error);
+                }
+            );
+        }
     };
 
+    $scope.breedSearchKeyword = '';
+    $scope.breedListFavorites = [];
     $scope.breedList = getDogBreeds();
 };
 
 var breedCtrl = function($scope, $http, $stateParams, $q) {
-    $scope.selectedBreedName = $stateParams.breedName;
-    $scope.loading = true;
+    $scope.toggleFavorite = function() {
+        $scope.favorite = !$scope.favorite;
+
+        if($scope.favorite) {
+            $http.post('dogs/favorites', {
+                'breedName': $scope.selectedBreedName
+            }).then(
+                function(data, status, headers, config) {
+                    $scope.favorite
+                },
+                function(error) {
+                    console.log(error);
+                }
+            );
+        }
+        else {
+            $http.delete('dogs/favorites', {
+                params: {
+                    'breedName': $scope.selectedBreedName
+                }
+            }).then(
+                function(data, status, headers, config) {
+
+                },
+                function(error) {
+                    console.log(error);
+                }
+            );
+        }
+    };
+
+    var isFavorite = function() {
+        $http.get('dogs/favorites').then(
+            function(data, status, headers, config) {
+                var index = data.data.indexOf($scope.selectedBreedName);
+                
+                if(index == -1) {
+                    $scope.favorite = false;
+                }
+                else {
+                    $scope.favorite = true;
+                }
+            },
+            function(error) {
+                console.log(error);
+            }
+        );
+    };
 
     var getDogBreedImages = function() {
         var deferred = $q.defer();
@@ -47,19 +120,23 @@ var breedCtrl = function($scope, $http, $stateParams, $q) {
             }
         }).then(
             function(data, status, headers, config) {
-            $scope.loading = false;
-            $scope.selectedBreedImages = data.data;
-            deferred.resolve();
-        },
-        function(error) {
-            console.log(error);
-            deferredd.reject();
-            $scope.selectedBreedImages = [];
-        });
+                $scope.loading = false;
+                $scope.selectedBreedImages = data.data;
+                deferred.resolve();
+            },
+            function(error) {
+                console.log(error);
+                deferredd.reject();
+                $scope.selectedBreedImages = [];
+            }
+        );
 
         return deferred.promise;
     };
 
+    $scope.selectedBreedName = $stateParams.breedName;
+    $scope.loading = true;
+    isFavorite();
     $scope.selectedBreedImages = getDogBreedImages();
 };
 
